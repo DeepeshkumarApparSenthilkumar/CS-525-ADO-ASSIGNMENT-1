@@ -78,7 +78,7 @@ Both commands should show installed versions.
 
 
 Compilation and Execution Instructions
-On Windows (using MinGW and mingw32-make)
+**On Windows (using MinGW and mingw32-make)
 Open the Command Prompt and navigate to your project directory (e.g., cd path\to\storemanager).
 
 Clean previous executables and object files:
@@ -108,7 +108,7 @@ This runs all the bundled test cases to verify your storage manager’s behavior
 
 Repeat cleaning and rebuilding as needed:
 You can use mingw32-make clean before building again to ensure a fresh start.
-
+**
 Additional Notes
 Use only the Windows Command Prompt or a MinGW shell.
 
@@ -132,18 +132,18 @@ Use Spotlight (Cmd + Space, then type "Terminal") or open the Terminal app from 
 
 Navigate to your project directory
 
-text
+
 cd /path/to/storemanager
 Clean previous builds
 Run:
 
-mingw32-make clean
+**mingw32-make clean**
 This command will remove any previous executable (like test_storemanager), ensuring a clean build environment.
 
 Build the project
 Run:
 
-mingw32-make -B
+**mingw32-make -B**
 
 This generates the test_storemanager executable. After this execute dir command to verify whether the given exe file is created.
 
@@ -163,23 +163,23 @@ Open Terminal
 
 Use Spotlight (Cmd + Space, then type "Terminal") or open the Terminal app from Applications > Utilities.
 
-2. cd /path/to/storemanager
+2.** cd /path/to/storemanager**
 
-3. make clean
-
-4../test_storemanager.exe
+3.** make clean
+**
+4.**./test_storemanager.exe**
 
 Storage Manager – Functionalities Overview
 1. Setup and File Handling
 
-initStorageManager(void)
+**initStorageManager(void)** : 
 Prepares the storage manager for use. It resets internal states and ensures file pointers start clean before any operation.
 
 createPageFile(char *fileName)
 Creates a brand-new page file on disk. The file always starts with a single empty page filled with zero bytes.
 The function returns success or error codes depending on whether the file could be created.
 
-openPageFile(char *fileName, SM_FileHandle *fHandle)
+**openPageFile(char *fileName, SM_FileHandle *fHandle)** 
 Opens an existing page file for both reading and writing. It also fills the file handle with metadata such as:
 
 the file’s name,
@@ -189,18 +189,19 @@ the number of pages (computed from file size / PAGE_SIZE),
 and sets the current page position to zero.
 If the file does not exist, it gracefully reports the error.
 
-closePageFile(SM_FileHandle *fHandle)
+**closePageFile(SM_FileHandle *fHandle)**
+
 Safely closes the file, resets internal structures, and ensures all resources are properly released.
 
-destroyPageFile(char *fileName)
+**destroyPageFile(char *fileName)**
 Permanently removes a page file from disk, but only after confirming that the file exists.
 
 2. Reading from Files
 
-readBlock(int pageNum, SM_FileHandle *fHandle, SM_PageHandle memPage)
+**readBlock(int pageNum, SM_FileHandle *fHandle, SM_PageHandle memPage)**
 Loads the content of the specified page into memory. It checks page boundaries and file validity before performing the read.
 
-getBlockPos(SM_FileHandle *fHandle)
+**getBlockPos(SM_FileHandle *fHandle)**
 Returns the current page position, which helps track where you are in the file.
 
 Convenience Read Functions:
@@ -219,16 +220,16 @@ All these functions rely on the core readBlock logic and add appropriate error h
 
 3. Writing to Files
 
-writeBlock(int pageNum, SM_FileHandle *fHandle, SM_PageHandle memPage)
+**writeBlock(int pageNum, SM_FileHandle *fHandle, SM_PageHandle memPage)**
 Writes data from memory into the specified page of the file. It ensures the page exists and updates the file metadata accordingly.
 
-writeCurrentBlock(SM_FileHandle *fHandle, SM_PageHandle memPage)
+**writeCurrentBlock(SM_FileHandle *fHandle, SM_PageHandle memPage)**
 Similar to writeBlock, but always writes to the page where the file handle is currently pointing.
 
-appendEmptyBlock(SM_FileHandle *fHandle)
+**appendEmptyBlock(SM_FileHandle *fHandle)**
 Expands the file by adding one more blank page filled with zeros. Updates the total page count in the file handle.
 
-ensureCapacity(int numberOfPages, SM_FileHandle *fHandle)
+**ensureCapacity(**int numberOfPages, SM_FileHandle *fHandle)
 Makes sure the file has at least the requested number of pages. If not, it appends enough empty blocks to reach that size.
 
 4. Helper Utilities
