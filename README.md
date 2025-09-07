@@ -270,6 +270,7 @@ Designed to align with database systems coursework while simulating realistic DB
 
 CODE SNIPPETS OF THE OUTPUT : 
 <img width="1595" height="127" alt="Screenshot 2025-09-06 194942" src="https://github.com/user-attachments/assets/2d1b3368-4e44-47c0-9032-ee83f9e29bda" />
-<img width="1595" height="127" alt="Screenshot 2025-09-06 194942" src="https://github.com/user-attachments/assets/64f523fb-460b-423b-853e-8f80e00b01f7" />
+<img width="1583" height="375" alt="Screenshot 2025-09-06 194915" src="https://github.com/user-attachments/assets/f83ca986-1bf8-4cd9-aadc-7870f1c6339a" />
+<img width="1641" height="966" alt="Screenshot 2025-09-06 194838" src="https://github.com/user-attachments/assets/77ff679f-f973-4964-b7d1-c549afc28714" />
 
 
