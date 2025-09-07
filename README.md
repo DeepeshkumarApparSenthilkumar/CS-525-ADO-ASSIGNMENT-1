@@ -1,29 +1,33 @@
+**CS 525: Programming Assignment I — Storage Manager 
+Contributer : Deepesh Kumar Appar Senthilkumar 
+A20644067**
+
+
 This module and assignment implements a paged file storage manager designed to facilitate block-level file management typical in database systems. It simplifies reading and writing fixed-size pages (blocks) from/to disk files into memory buffers and vice versa, enabling efficient data storage and retrieval operations.
 
 The storage manager operates using a fixed constant page size, maintaining essential metadata for each open file, including the total number of pages, the current page position, the file name, and internal file pointers to manage access.
 
-This module provides and explains:
+**This module provides and explains:**
 
-File creation, opening, closing, and deletion (destroy) functions.
+-File creation, opening, closing, and deletion (destroy) functions.
 
-Reading and writing  pages and sequential blocks.
+-Reading and writing  pages and sequential blocks.
 
-Appending empty pages to over capacity files.
+-Appending empty pages to over capacity files.
 
-Managing and ensuring minimum file capacity.
+-Managing and ensuring minimum file capacity.
 
-Custom error handling for robust operation.
+-Custom error handling for robust operation.
 
-This design abstracts low-level file operations providing a consistent interface for page-based data management.
+-This design abstracts low-level file operations providing a consistent interface for page-based data management.
 
-Programming Language
+**Programming Language**
 Implemented entirely in C, leveraging standard libraries such as <stdio.h>, <stdlib.h>, and system headers for file handling and memory management.
 
 System Requirements & Dependencies
 C compiler (e.g., GCC) capable of compiling code.
 
 Standard POSIX-compatible OS for file operations (Linux, macOS, Unix).
-
 
 Installing MinGW-w64 and mingw32-make on Windows : 
 
@@ -67,7 +71,6 @@ Verify Installation
 
 Open Command Prompt and check:
 
-text
 gcc --version
 mingw32-make --version
 Both commands should show installed versions.
@@ -81,7 +84,7 @@ Open the Command Prompt and navigate to your project directory (e.g., cd path\to
 Clean previous executables and object files:
 Run:
 
-text
+
 mingw32-make clean
 This command removes the compiled executable (test_storemanager.exe) if it exists.
 
@@ -90,7 +93,7 @@ It uses Windows-specific del for cleaning, as configured in your Makefile.
 Build the project:
 Run:
 
-text
+
 mingw32-make -B
 The -B flag forces a rebuild of all targets, ensuring every file is freshly compiled.
 
@@ -99,7 +102,7 @@ This compiles test_assign1_1.c, storage_mgr.c, and dberror.c, and produces the t
 Run the test executable:
 After a successful build, execute:
 
-text
+
 test_storemanager.exe
 This runs all the bundled test cases to verify your storage manager’s behavior.
 
