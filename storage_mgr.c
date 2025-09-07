@@ -28,25 +28,36 @@
 /* Keeping one active file pointer globally . */
 static FILE *g_active_fp = NULL;
 
-/* Initializing the first file variable . Global file pointers for managing the currently open file. */
+/* Initializing the first file variable . Global file pointers for managing the currently open file. // Initialising file pointer i.e. storage manager */
 FILE *fdk = NULL;
 
 /* ---------------------------------------------------------------------------
    Internal functionalities
    ---------------------------------------------------------------------------*/
 
-/* Allocate one empty page (all zeros). This Function Allocates a blank memory page with zeroes. */
+/* Allocate one empty page (all zeros). This Function Allocates a blank memory page with zeroes.  sm_new_page - Allocates a new memory page filled with zeroes.*/
 static char *sm_new_page(void) {
     return (char *)calloc(PAGE_SIZE, 1);
 }
 
-/* This function helps to Open the file safely initially. It returns Null if the input is not matched with if conditions */
-static FILE *sm_fopen(const char *fname, const char *mode) {
-    if (!fname || !mode) return NULL;
+/* This function helps to Open the file safely initially. It returns Null if the input is not matched with if conditions 
+/**
+ * sm_fopen - Safely opens a file.
+ * @fname: Name of the file.
+ * @mode: Opening mode string ("rb", "wb", etc.).
+ * @return File pointer, or NULL if inputs are invalid.
+ */
+
+static FILE *sm_fopen(const char *fname, const char *mode) {                  // Open in read mode
+    if (!fname || !mode) return NULL;     // Write null bytes one at a time
     return fopen(fname, mode);
 }
 
-/* Getting file size one by one in bytes . It gets file size using fstat*/
+/* Getting file size one by one in bytes . It gets file size using fstat * sm_file_size - Retrieves file size in bytes.
+ * @fp: File pointer.
+ * @out: Output parameter for file size.
+ * @return 1 if successful, 0 otherwise.*/
+
 static int sm_file_size(FILE *fp, long *out) {
     if (!fp || !out) return 0;
     struct stat st;
@@ -57,7 +68,11 @@ static int sm_file_size(FILE *fp, long *out) {
     return 1;
 }
 
-/* Converting bytes into pages and helps to return the pages and rounds up. */
+/* Converting bytes into pages and helps to return the pages and rounds up. 
+* sm_pages_from_bytes - Converts bytes to page count, rounding up.
+ * @sz: Size in bytes.
+ * @return Number of pages required.*/
+
 static int sm_pages_from_bytes(long sz) {
     if (sz <= 0) return 0;
     int pages = (int)(sz / PAGE_SIZE);
@@ -65,7 +80,12 @@ static int sm_pages_from_bytes(long sz) {
     return pages;
 }
 
-/* Validating the page to run . It checks a given page index is valid for a particular file. */
+/* Validating the page to run . It checks a given page index is valid for a particular file.
+* sm_valid_page - Validates page index for a file.
+ * @idx: Page index.
+ * @fh: File handle.
+ * @return 1 if valid, 0 if invalid.*/
+
 static int sm_valid_page(int idx, const SM_FileHandle *fh) {
     if (!fh) return 0;
     if (idx < 0) return 0;
@@ -73,7 +93,11 @@ static int sm_valid_page(int idx, const SM_FileHandle *fh) {
     return 1;
 }
 
-/* Seek to page.It allocates and helps to seek file pointer to particular page */
+/* Seek to page.It allocates and helps to seek file pointer to particular page 
+sm_seek_page - Seeks file pointer to the start of a given page.
+ * @fp: File pointer.
+ * @idx: Page index.*/
+
 static int sm_seek_page(FILE *fp, int idx) {
     if (!fp) return 0;
     long offset = (long)idx * (long)PAGE_SIZE;
@@ -117,7 +141,12 @@ static int sm_ensure_open(const char *fname, const char *mode) {
     return (g_active_fp != NULL);
 }
 
-/* Close global. Similarly it manages the global pointer */
+/* Close global. Similarly it manages the global pointer 
+* sm_ensure_open - Ensures the global file pointer is open.
+ * @fname: File name.
+ * @mode: Opening mode.
+ * @return 1 if open, 0 otherwise. */
+
 static void sm_close_global(void) {
     if (g_active_fp) {
         fclose(g_active_fp);
@@ -141,7 +170,10 @@ extern void initStorageManager(void) {
     fdk      = NULL;
 }
 
-/* Create file with one blank page. */
+/* Create file with one blank page. * createPageFile - Creates a new paginated file (one blank page).
+ * @fileName: Name of the file to create.
+ * @return Error code. */
+
 extern RC createPageFile(char *fileName) {
     if (!fileName) return RC_FILE_NOT_FOUND;
     FILE *fp = sm_fopen(fileName, "w+b");
@@ -156,7 +188,12 @@ extern RC createPageFile(char *fileName) {
     return RC_OK;
 }
 
-/* Open file and populate handle. */
+/* Open file and populate handle. 
+* openPageFile - Opens an existing paginated file, populates SM_FileHandle.
+ * @fileName: Name of the file.
+ * @fHandle: Pointer to file handle struct.
+ * @return Error code.*/
+
 extern RC openPageFile(char *fileName, SM_FileHandle *fHandle) {
     if (!fileName || !fHandle) return RC_FILE_NOT_FOUND;
     FILE *fp = sm_fopen(fileName, "r+b");
@@ -185,7 +222,7 @@ extern RC openPageFile(char *fileName, SM_FileHandle *fHandle) {
     return RC_OK;
 }
 
-/* Close file. */
+/* Close file. */ // Original method for closePageFile
 extern RC closePageFile(SM_FileHandle *fHandle) {
     (void)fHandle;
     sm_close_global();
@@ -193,7 +230,7 @@ extern RC closePageFile(SM_FileHandle *fHandle) {
     return RC_OK;
 }
 
-/* Destroy file. */
+/* Destroy file. */ 
 extern RC destroyPageFile(char *fileName) {
     if (!fileName) return RC_FILE_NOT_FOUND;
     if (access(fileName, F_OK) != 0) return RC_FILE_NOT_FOUND;
@@ -268,7 +305,13 @@ extern RC readLastBlock(SM_FileHandle *fHandle, SM_PageHandle memPage) {
     return readBlock(last, fHandle, memPage);
 }
 
-/* Internal write helper. */
+/* Internal write helper. * sm_read_internal - Reads contents of a page into buffer.
+ * @fp: File pointer.
+ * @idx: Page index.
+ * @fh: File handle.
+ * @memPage: Buffer to read into.
+ * @return Error code */
+
 static RC sm_write_internal(FILE *fp, int idx, SM_FileHandle *fh, SM_PageHandle memPage) {
     if (!fp || !fh || !memPage) return RC_ERROR;
     if (!sm_valid_page(idx, fh)) return RC_WRITE_FAILED;
