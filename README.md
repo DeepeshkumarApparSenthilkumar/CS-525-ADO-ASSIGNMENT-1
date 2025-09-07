@@ -271,7 +271,7 @@ Sample Output after executing the code snippets :
 <img width="1641" height="966" alt="Screenshot 2025-09-06 194838" src="https://github.com/user-attachments/assets/51769ebc-f3d1-48d0-8bec-811e312b5632" />
 <img width="1583" height="375" alt="Screenshot 2025-09-06 194915" src="https://github.com/user-attachments/assets/7c7353cd-bc45-405a-a54e-7512cfeb85f7" />
 <img width="1595" height="127" alt="Screenshot 2025-09-06 194942" src="https://github.com/user-attachments/assets/f5248dff-28eb-4a71-9eb6-4d2615bb8969" />
-<img width="1564" height="227" alt="Screenshot 2025-09-07 011054" src="https://github.com/user-attachments/assets/2747987e-f9ae-4c8c-a04e-697fcfb9628b" />
+
 
 
 
