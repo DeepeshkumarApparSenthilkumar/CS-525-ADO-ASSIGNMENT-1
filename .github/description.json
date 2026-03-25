@@ -1,0 +1,1 @@
+{"description":"A C-based paged file storage manager implementation for database systems. Features efficient page management, buffer handling, and file I/O operations for CS-525 ADO course assignment.", "topics": ["database", "storage-manager", "paging", "memory-management", "c-programming"]}
